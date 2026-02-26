@@ -1,0 +1,258 @@
+{
+  "tags": [
+    { "id": "abroad", "label": "Do zahraničí" },
+    { "id": "lan", "label": "Na LAN párty" },
+    { "id": "nature", "label": "Do přírody" },
+    { "id": "camp", "label": "Stanovat" },
+    { "id": "sea", "label": "K moři" },
+    { "id": "car", "label": "Autem" },
+    { "id": "own_sleep", "label": "Vlastní spaní" }
+  ],
+  "groupPriorities": {
+    "Oblečení": 1,
+    "Hygiena": 2,
+    "Doklady": 3,
+    "Elektronika": 4,
+    "Vybavení": 5
+  },
+  "items": [
+    {
+      "id": "tshirt",
+      "label": "Tričko",
+      "group": "Oblečení",
+      "when": { "any": ["*"] },
+      "qty": { "type": "perNight", "value": 1, "cap": 7 }
+    },
+    {
+      "id": "tshirt",
+      "label": "Tričko",
+      "group": "Oblečení",
+      "when": { "any": ["sea"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "underwear",
+      "label": "Spodní prádlo",
+      "group": "Oblečení",
+      "when": { "any": ["*"] },
+      "qty": { "type": "perNight", "value": 1, "cap": 10 }
+    },
+    {
+      "id": "socks",
+      "label": "Ponožky",
+      "group": "Oblečení",
+      "when": { "any": ["*"] },
+      "qty": { "type": "perNight", "value": 1, "cap": 10 }
+    },
+    {
+      "id": "hiking_boots",
+      "label": "Trekingové boty",
+      "group": "Oblečení",
+      "when": { "any": ["nature", "camp"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "swimsuit",
+      "label": "Plavky",
+      "group": "Oblečení",
+      "when": { "any": ["sea"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "toothbrush",
+      "label": "Kartáček na zuby",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "sunscreen",
+      "label": "Opalovací krém",
+      "group": "Hygiena",
+      "when": { "any": ["sea"] },
+      "qty": { "type": "perNight", "value": 1, "cap": 5 }
+    },
+    {
+      "id": "meds",
+      "label": "Základní léky",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "towel",
+      "label": "Ručník",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "shower_gel",
+      "label": "Sprchový gel",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "toothpaste",
+      "label": "Zubní pasta",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "sanitizer",
+      "label": "Dezinfekce",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "shampoo",
+      "label": "Šampon",
+      "group": "Hygiena",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "passport",
+      "label": "Pas",
+      "group": "Doklady",
+      "when": { "any": ["abroad"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "travel_insurance",
+      "label": "Cestovní pojištění",
+      "group": "Doklady",
+      "when": { "any": ["abroad"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "charger",
+      "label": "Nabíječka",
+      "group": "Elektronika",
+      "when": { "any": ["*"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "powerbank",
+      "label": "Powerbanka",
+      "group": "Elektronika",
+      "when": { "any": ["abroad", "nature", "lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "laptop",
+      "label": "Pracovní notebook",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "ethernet",
+      "label": "LAN kabel 10 metrů",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "gaming_pc",
+      "label": "Herní PC",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "extension_cord",
+      "label": "Prodlužka",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "monitor",
+      "label": "Monitor",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "mouse",
+      "label": "Myš",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "keyboard",
+      "label": "Klávesnice",
+      "group": "Elektronika",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "driving_license",
+      "label": "Řidičák",
+      "group": "Doklady",
+      "when": { "any": ["car"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "car_keys",
+      "label": "Klíče od auta",
+      "group": "Doklady",
+      "when": { "any": ["car"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "tent",
+      "label": "Stan",
+      "group": "Vybavení",
+      "when": { "all": ["camp", "nature"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "sleeping_bag",
+      "label": "Spacák",
+      "group": "Vybavení",
+      "when": { "any": ["camp", "own_sleep"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "mat",
+      "label": "Karimatka",
+      "group": "Vybavení",
+      "when": { "any": ["camp"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "air_mattress",
+      "label": "Nafukovací matrace",
+      "group": "Vybavení",
+      "when": { "any": ["own_sleep"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "bedsheet",
+      "label": "Prostěradlo",
+      "group": "Vybavení",
+      "when": { "any": ["own_sleep"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "travel_pillow",
+      "label": "Cestovní polštář",
+      "group": "Vybavení",
+      "when": { "any": ["own_sleep"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "water_bottle",
+      "label": "Láhve na vodu",
+      "group": "Vybavení",
+      "when": { "any": ["nature", "camp", "sea"] },
+      "qty": { "type": "fixed", "value": 1 }
+    }
+  ]
+}

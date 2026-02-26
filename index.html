@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balím se na cesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --ink: #1f2a44;
+        --paper: #f8f5ef;
+        --accent: #d97706;
+        --accent-soft: #fde68a;
+      }
+
+      body {
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 8% 12%, #fff4cc 0, #fff4cc 10%, transparent 38%),
+          radial-gradient(circle at 82% 6%, #f7d8c9 0, #f7d8c9 12%, transparent 44%),
+          linear-gradient(135deg, #fffef9 0%, var(--paper) 68%, #efece4 100%);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <main class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:py-10">
+      <header class="mb-6">
+        <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Balím se na cesty</h1>
+        <p class="mt-2 text-sm sm:text-base text-slate-700">
+          Nastav cestu a checklist se přepočítá automaticky.
+        </p>
+      </header>
+
+      <section
+        class="rounded-2xl border border-amber-200/70 bg-white/80 p-5 shadow-sm backdrop-blur sm:p-6"
+        aria-labelledby="trip-config-title"
+      >
+        <h2 id="trip-config-title" class="text-lg font-bold">Kam pojedu?</h2>
+
+        <div class="mt-4">
+          <div class="flex items-center justify-between">
+            <label for="nights-range" class="text-sm font-semibold">Počet nocí</label>
+            <output id="nights-value" for="nights-range" class="rounded-md bg-amber-100 px-2 py-1 text-sm font-bold">
+              1
+            </output>
+          </div>
+          <input
+            id="nights-range"
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            value="1"
+            class="mt-3 w-2/3 sm:w-1/2 accent-amber-600"
+          />
+          <p class="mt-2 text-xs text-slate-600">Hodnota 10 znamená 10+ nocí.</p>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="text-sm font-semibold">Typ cesty</h3>
+          <div id="tags-container" class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2"></div>
+        </div>
+      </section>
+
+      <section
+        class="mt-6 rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-sm sm:p-6"
+        aria-labelledby="checklist-title"
+      >
+        <h2 id="checklist-title" class="text-lg font-bold">Checklist</h2>
+        <p id="empty-state" class="mt-4 text-sm text-slate-600 hidden">
+          Pro aktuální volbu zatím nejsou žádné položky.
+        </p>
+        <div id="checklist-container" class="mt-4 space-y-4"></div>
+      </section>
+
+      <p id="error-box" class="mt-5 hidden rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"></p>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
