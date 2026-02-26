@@ -99,6 +99,27 @@ function bindEvents() {
     state.checked[target.value] = target.checked;
     persistState();
   });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) {
+      return;
+    }
+    const resetButton = target.closest("#reset-button");
+    if (!resetButton) {
+      return;
+    }
+    resetAppState();
+  });
+}
+
+function resetAppState() {
+  state.nights = 1;
+  state.activeTags = new Set();
+  state.checked = {};
+  localStorage.removeItem(STORAGE_KEY);
+  renderTagControls();
+  renderAll();
 }
 
 function renderAll() {
