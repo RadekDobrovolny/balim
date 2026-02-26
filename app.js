@@ -218,7 +218,7 @@ function renderChecklist() {
     heading.textContent = group;
 
     const list = document.createElement("ul");
-    list.className = "mt-3 space-y-2";
+    list.className = "checklist-item-list mt-3 grid grid-cols-1 gap-2 lg:grid-cols-2";
 
     const sortedItems = byGroup[group].sort((a, b) => a.label.localeCompare(b.label, "cs"));
     for (const item of sortedItems) {
@@ -266,7 +266,7 @@ function renderPrintPreview(computed) {
     heading.textContent = group;
 
     const list = document.createElement("ul");
-    list.className = "mt-2 space-y-2";
+    list.className = "print-item-list mt-2 grid grid-cols-1 gap-1.5";
 
     const sortedItems = byGroup[group].sort((a, b) => a.label.localeCompare(b.label, "cs"));
     for (const item of sortedItems) {

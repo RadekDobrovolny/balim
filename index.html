@@ -142,6 +142,11 @@
         border-radius: 0;
       }
 
+      body.print-preview-active #print-view .print-item-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 0.8rem;
+      }
+
       @media print {
         @page {
           margin: 8mm;
@@ -181,6 +186,11 @@
         #print-view #print-checklist-container ul {
           margin-top: 0.3rem !important;
           row-gap: 0.2rem !important;
+        }
+
+        #print-view .print-item-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          column-gap: 0.8rem !important;
         }
       }
     </style>
