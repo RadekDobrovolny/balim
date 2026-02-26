@@ -13,7 +13,10 @@ const dom = {
   tagsContainer: document.querySelector("#tags-container"),
   checklistContainer: document.querySelector("#checklist-container"),
   emptyState: document.querySelector("#empty-state"),
-  errorBox: document.querySelector("#error-box")
+  errorBox: document.querySelector("#error-box"),
+  printSummary: document.querySelector("#print-summary"),
+  printChecklistEmpty: document.querySelector("#print-checklist-empty"),
+  printChecklistContainer: document.querySelector("#print-checklist-container")
 };
 
 init();
@@ -100,16 +103,36 @@ function bindEvents() {
     persistState();
   });
 
+  dom.printChecklistContainer.addEventListener("change", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement) || target.name !== "print-check-item") {
+      return;
+    }
+    state.checked[target.value] = target.checked;
+    persistState();
+    renderChecklist();
+  });
+
   document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element)) {
       return;
     }
-    const resetButton = target.closest("#reset-button");
-    if (!resetButton) {
+    if (target.closest("#reset-button")) {
+      resetAppState();
       return;
     }
-    resetAppState();
+    if (target.closest("#print-button")) {
+      showPrintPreview();
+      return;
+    }
+    if (target.closest("#print-back-button")) {
+      hidePrintPreview();
+      return;
+    }
+    if (target.closest("#print-now-button")) {
+      window.print();
+    }
   });
 }
 
@@ -120,6 +143,16 @@ function resetAppState() {
   localStorage.removeItem(STORAGE_KEY);
   renderTagControls();
   renderAll();
+}
+
+function showPrintPreview() {
+  const computed = computeChecklist(state.data.items, state.nights, state.activeTags, state.checked);
+  renderPrintPreview(computed);
+  document.body.classList.add("print-preview-active");
+}
+
+function hidePrintPreview() {
+  document.body.classList.remove("print-preview-active");
 }
 
 function renderAll() {
@@ -173,15 +206,7 @@ function renderChecklist() {
   }
 
   dom.emptyState.classList.add("hidden");
-  const byGroup = groupBy(computed, (item) => item.group);
-  const sortedGroups = Object.keys(byGroup).sort((a, b) => {
-    const priorityA = getGroupPriority(a);
-    const priorityB = getGroupPriority(b);
-    if (priorityA !== priorityB) {
-      return priorityA - priorityB;
-    }
-    return a.localeCompare(b, "cs");
-  });
+  const { byGroup, sortedGroups } = groupAndSortChecklist(computed);
   const fragment = document.createDocumentFragment();
 
   for (const group of sortedGroups) {
@@ -224,6 +249,55 @@ function renderChecklist() {
 
   dom.checklistContainer.innerHTML = "";
   dom.checklistContainer.appendChild(fragment);
+}
+
+function renderPrintPreview(computed) {
+  const { byGroup, sortedGroups } = groupAndSortChecklist(computed);
+  const checklistFragment = document.createDocumentFragment();
+
+  dom.printSummary.textContent = buildPrintSummary();
+
+  for (const group of sortedGroups) {
+    const section = document.createElement("section");
+    section.className = "border border-slate-300 p-3";
+
+    const heading = document.createElement("h4");
+    heading.className = "text-sm font-semibold uppercase tracking-wide text-slate-700";
+    heading.textContent = group;
+
+    const list = document.createElement("ul");
+    list.className = "mt-2 space-y-2";
+
+    const sortedItems = byGroup[group].sort((a, b) => a.label.localeCompare(b.label, "cs"));
+    for (const item of sortedItems) {
+      const li = document.createElement("li");
+      li.className = "px-1";
+
+      const label = document.createElement("label");
+      label.className = "flex items-center gap-3 text-sm";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = "print-check-item";
+      checkbox.value = item.id;
+      checkbox.checked = item.checked;
+      checkbox.className = "h-4 w-4 rounded border-slate-400 text-slate-700 focus:ring-0";
+
+      const text = document.createElement("span");
+      text.textContent = item.qty > 1 ? `${item.label} × ${item.qty}` : item.label;
+
+      label.append(checkbox, text);
+      li.appendChild(label);
+      list.appendChild(li);
+    }
+
+    section.append(heading, list);
+    checklistFragment.appendChild(section);
+  }
+
+  dom.printChecklistContainer.innerHTML = "";
+  dom.printChecklistContainer.appendChild(checklistFragment);
+  dom.printChecklistEmpty.classList.toggle("hidden", checklistFragment.childNodes.length > 0);
 }
 
 function computeChecklist(items, nights, activeTags, checkedState) {
@@ -321,6 +395,19 @@ function groupBy(list, keyGetter) {
   return out;
 }
 
+function groupAndSortChecklist(checklist) {
+  const byGroup = groupBy(checklist, (item) => item.group);
+  const sortedGroups = Object.keys(byGroup).sort((a, b) => {
+    const priorityA = getGroupPriority(a);
+    const priorityB = getGroupPriority(b);
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+    return a.localeCompare(b, "cs");
+  });
+  return { byGroup, sortedGroups };
+}
+
 function getGroupPriority(group) {
   const rawPriority = state.data.groupPriorities?.[group];
   return Number.isFinite(rawPriority) ? rawPriority : Number.POSITIVE_INFINITY;
@@ -329,6 +416,31 @@ function getGroupPriority(group) {
 function clampNights(value) {
   const num = Number.isFinite(value) ? value : 1;
   return Math.min(10, Math.max(0, Math.round(num)));
+}
+
+function buildPrintSummary() {
+  const selectedTagLabels = state.data.tags
+    .filter((tag) => state.activeTags.has(tag.id))
+    .map((tag) => tag.label);
+
+  const tagsText = selectedTagLabels.length > 0 ? selectedTagLabels.join(", ") : "Bez vybraných tagů";
+  return `${tagsText}, ${formatTripDurationForSummary(state.nights)}.`;
+}
+
+function formatTripDurationForSummary(nights) {
+  if (nights === 0) {
+    return "bez přenocování";
+  }
+  if (nights === 10) {
+    return "na 10+ dní";
+  }
+  if (nights === 1) {
+    return "na 1 den";
+  }
+  if (nights >= 2 && nights <= 4) {
+    return `na ${nights} dny`;
+  }
+  return `na ${nights} dní`;
 }
 
 function showError(message) {
