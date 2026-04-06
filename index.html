@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <title>Balím se na cesty</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script
@@ -45,12 +45,12 @@
         <h2 id="trip-config-title" class="text-lg font-bold">Kam pojedu?</h2>
 
         <div class="mt-4">
-          <div class="flex items-center justify-between">
-            <label for="nights-range" class="text-sm font-semibold">Počet nocí</label>
+          <label for="nights-range" class="flex items-center gap-2 text-sm font-semibold">
+            Počet nocí:
             <output id="nights-value" for="nights-range" class="rounded-md bg-amber-100 px-2 py-1 text-sm font-bold">
               1
             </output>
-          </div>
+          </label>
           <input
             id="nights-range"
             type="range"

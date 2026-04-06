@@ -45,6 +45,13 @@
       "qty": { "type": "perNight", "value": 1, "cap": 10 }
     },
     {
+      "id": "warm_socks",
+      "label": "Teplé ponožky",
+      "group": "Oblečení",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
       "id": "hiking_boots",
       "label": "Trekingové boty",
       "group": "Oblečení",
@@ -136,10 +143,10 @@
       "qty": { "type": "fixed", "value": 1 }
     },
     {
-      "id": "powerbank",
-      "label": "Powerbanka",
+      "id": "toaster",
+      "label": "Toustovač",
       "group": "Elektronika",
-      "when": { "any": ["abroad", "nature", "lan"] },
+      "when": { "any": ["lan"] },
       "qty": { "type": "fixed", "value": 1 }
     },
     {
