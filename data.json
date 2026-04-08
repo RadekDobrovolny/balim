@@ -3,9 +3,11 @@
     { "id": "abroad", "label": "Do zahraničí" },
     { "id": "lan", "label": "Na LAN párty" },
     { "id": "nature", "label": "Do přírody" },
-    { "id": "camp", "label": "Stanovat" },
+    { "id": "festival", "label": "Na festival" },
     { "id": "sea", "label": "K moři" },
     { "id": "car", "label": "Autem" },
+    { "id": "camp", "label": "Stanovat" },
+    { "id": "coffee", "label": "S kávou" },
     { "id": "own_sleep", "label": "Vlastní spaní" }
   ],
   "groupPriorities": {
@@ -13,7 +15,8 @@
     "Hygiena": 2,
     "Doklady": 3,
     "Elektronika": 4,
-    "Vybavení": 5
+    "Vybavení": 5,
+    "Kávové věci": 6
   },
   "items": [
     {
@@ -47,6 +50,13 @@
     {
       "id": "warm_socks",
       "label": "Teplé ponožky",
+      "group": "Oblečení",
+      "when": { "any": ["lan"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "slippers",
+      "label": "Pantofle",
       "group": "Oblečení",
       "when": { "any": ["lan"] },
       "qty": { "type": "fixed", "value": 1 }
@@ -259,6 +269,48 @@
       "label": "Láhve na vodu",
       "group": "Vybavení",
       "when": { "any": ["nature", "camp", "sea"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_grinder",
+      "label": "Mlýnek",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_kettle",
+      "label": "Konvice",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_filters",
+      "label": "Filtry",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_beans",
+      "label": "Zrno",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_dripper",
+      "label": "Dripper",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
+      "qty": { "type": "fixed", "value": 1 }
+    },
+    {
+      "id": "coffee_carafe",
+      "label": "Karafa",
+      "group": "Kávové věci",
+      "when": { "any": ["coffee"] },
       "qty": { "type": "fixed", "value": 1 }
     }
   ]

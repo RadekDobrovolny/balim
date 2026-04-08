@@ -1,4 +1,6 @@
 const STORAGE_KEY = "packingChecklistStateV1";
+const DESTINATION_TAG_IDS = ["abroad", "lan", "nature", "festival", "sea"];
+const OPTIONAL_TAG_IDS = ["car", "camp", "coffee", "own_sleep"];
 
 const state = {
   data: null,
@@ -172,28 +174,68 @@ function updateNightsUI() {
 
 function renderTagControls() {
   const fragment = document.createDocumentFragment();
+  const tagsById = new Map(state.data.tags.map((tag) => [tag.id, tag]));
+  const destinationTags = getTagsInOrder(DESTINATION_TAG_IDS, tagsById);
+  const optionalTags = getTagsInOrder(OPTIONAL_TAG_IDS, tagsById);
+  const configuredIds = new Set([...DESTINATION_TAG_IDS, ...OPTIONAL_TAG_IDS]);
+  const remainingTags = state.data.tags.filter((tag) => !configuredIds.has(tag.id));
+  const secondGroupTags = [...optionalTags, ...remainingTags];
 
-  for (const tag of state.data.tags) {
-    const wrapper = document.createElement("label");
-    wrapper.className =
-      "flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm hover:border-amber-300";
-
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.name = "trip-tag";
-    input.value = tag.id;
-    input.className = "h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500";
-    input.checked = state.activeTags.has(tag.id);
-
-    const text = document.createElement("span");
-    text.textContent = tag.label;
-
-    wrapper.append(input, text);
-    fragment.appendChild(wrapper);
+  if (destinationTags.length > 0) {
+    fragment.appendChild(createTagGrid(destinationTags));
+  }
+  if (destinationTags.length > 0 && secondGroupTags.length > 0) {
+    const divider = document.createElement("div");
+    divider.className = "border-t border-slate-200";
+    fragment.appendChild(divider);
+  }
+  if (secondGroupTags.length > 0) {
+    fragment.appendChild(createTagGrid(secondGroupTags));
   }
 
   dom.tagsContainer.innerHTML = "";
   dom.tagsContainer.appendChild(fragment);
+}
+
+function getTagsInOrder(tagIds, tagsById) {
+  const ordered = [];
+  for (const tagId of tagIds) {
+    const tag = tagsById.get(tagId);
+    if (tag) {
+      ordered.push(tag);
+    }
+  }
+  return ordered;
+}
+
+function createTagGrid(tags) {
+  const grid = document.createElement("div");
+  grid.className = "grid grid-cols-1 gap-2 sm:grid-cols-2";
+
+  for (const tag of tags) {
+    grid.appendChild(createTagControl(tag));
+  }
+
+  return grid;
+}
+
+function createTagControl(tag) {
+  const wrapper = document.createElement("label");
+  wrapper.className =
+    "flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm hover:border-amber-300";
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.name = "trip-tag";
+  input.value = tag.id;
+  input.className = "h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500";
+  input.checked = state.activeTags.has(tag.id);
+
+  const text = document.createElement("span");
+  text.textContent = tag.label;
+
+  wrapper.append(input, text);
+  return wrapper;
 }
 
 function renderChecklist() {
